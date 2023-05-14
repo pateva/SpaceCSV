@@ -9,7 +9,13 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
+/**
+ * Runner class to with the main user interaction
+ */
 public class Runner {
+    /**
+     * function to be called when starting the app
+     */
     public void startApp() {
         String filePath, emailSender, passwordSender, emailReceiver;
         Scanner scanner = new Scanner(System.in);
@@ -32,6 +38,10 @@ public class Runner {
 
     }
 
+    /**
+     * The user chooses the best suitable language for them (en/de) with en as default
+     * @return language preferences
+     */
     private Locale setLocale() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Please choose your preferred language (en/de): ");
@@ -53,6 +63,13 @@ public class Runner {
         return locale;
     }
 
+    /**
+     * Function to generate a weather report
+     * @param path path of the submitted CSV file
+     * @param senderMail e-mail address of the sender
+     * @param senderPassword password of the sener
+     * @param receiverMail e-mail of the receiver
+     */
     private void sendReport(String path, String senderMail, String senderPassword, String receiverMail) {
         WeatherReport report = new WeatherReport(CsvReader.ReadCSV(path));
         CsvWriter.write(report.calculateReport(), "report.csv");

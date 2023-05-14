@@ -2,7 +2,7 @@ package classes;
 
 /**
  * Model to save the weather conditions for a given day
- * Could be easily integrated with a DB => also the reason it was created
+ * Could be easily integrated with a DB
  */
 
 public class DayWeatherConditions {
