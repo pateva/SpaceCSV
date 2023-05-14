@@ -88,10 +88,12 @@ public class DayWeatherConditions {
      */
     public int calculateChecksum() {
         if (this.isValidLaunchDay()) {
-            return this.wind + this.humidity;
+            this.checksum = this.wind + this.humidity;
         } else {
-            return -1;
+            this.checksum = -1;
         }
+
+        return checksum;
     }
 
     public boolean isValidLaunchDay() {
@@ -103,9 +105,9 @@ public class DayWeatherConditions {
 
         if (precipitation != 0) return false;
 
-        if (!lightning.toLowerCase().equals("no")) return false;
+        if (!lightning.equalsIgnoreCase("no")) return false;
 
-        return (!clouds.toLowerCase().equals("cumulus") && !clouds.toLowerCase().equals("nimbus"));
+        return (!clouds.equalsIgnoreCase("cumulus") && !clouds.equalsIgnoreCase("nimbus"));
     }
 
     @Override

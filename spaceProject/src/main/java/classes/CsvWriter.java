@@ -25,6 +25,7 @@ public class CsvWriter {
             fw.close();
         } catch (IOException e) {
             System.err.println("There was an issue saving the file!");
+            System.exit(2);
         }
     }
 }

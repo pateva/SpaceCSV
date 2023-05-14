@@ -18,7 +18,7 @@ public class DayWeatherConditionsMapper {
      */
     public static ArrayList<DayWeatherConditions> mapper(ArrayList<String[]> list, int cntDays) throws InvalidFileException {
         if (!isValidList(list)) {
-            throw new InvalidFileException("Invalid file");
+            throw new InvalidFileException();
         } else {
             ArrayList<DayWeatherConditions> condList = new ArrayList<>();
 
@@ -50,24 +50,18 @@ public class DayWeatherConditionsMapper {
                             day.setClouds(condition[index]);
                             break;
                         default:
-                            throw new InvalidFileException("Something is really wrong :')");
+                            throw new InvalidFileException();
                     }
                 }
                 condList.add(day);
             }
-
-            /*
-            for (DayWeatherConditions damn : condList) {
-                System.out.println(damn);
-            }
-            */
 
             return condList;
         }
     }
 
     /**
-     * this fucntions checks if the data provided in the ArrayList of String arrays is valid
+     * this functions checks if the data provided in the ArrayList of String arrays is valid
      *
      * @param list ArrayList ofr String Arrays
      * @return true if valid and false if invalid
@@ -76,7 +70,6 @@ public class DayWeatherConditionsMapper {
         if (list.size() != 7) return false;
 
         ArrayList<String> cond = new ArrayList<>();
-        int i = 0;
 
         for (String[] str : list) {
             cond.add(str[0]);

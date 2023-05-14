@@ -9,8 +9,8 @@ import java.util.Arrays;
 
 public class WeatherReport {
 
-    private ArrayList<String[]> listDays;
-    private int days;
+    private final ArrayList<String[]> listDays;
+    private final int days;
 
     public WeatherReport(ArrayList<String[]> listDays) {
         this.listDays = listDays;
@@ -29,7 +29,9 @@ public class WeatherReport {
         report.add(new String[]{"Calculations/Parameter", "Average value", "Max value", "Min Value", "Median Value"});
 
         for (String[] str : listDays) {
-            if (str[0].equals("Day/Parameter")) continue;
+            if (str[0].equals("Day/Parameter")) {
+                //do nothing
+            }
             else if (!str[0].equals("Lightning") && !str[0].equals("Clouds")) {
                 report.add(aggrNumParam(str));
             } else {

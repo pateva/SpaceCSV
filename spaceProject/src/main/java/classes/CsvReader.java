@@ -1,8 +1,5 @@
 package classes;
 
-import service.DayWeatherConditionsMapper;
-import service.WeatherReport;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -15,15 +12,15 @@ public class CsvReader {
      *
      * @param path to the CSV file
      * @return value is an arrayList of String arrays containing the different data on every line
-     * @throws FileNotFoundException if no file is found on the specified path
-     * @throws IOException if an error occurs while reading the file
+     * catches FileNotFoundException if no file is found on the specified path and terminates the program
+     * catches IOException if an error occurs while reading the file and terminates the program
      */
     public static ArrayList<String[]> ReadCSV(String path) {
         ArrayList<String[]> conditions = new ArrayList<>();
         String splitBy = ",";
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader("../spaceFile.csv"));
+            BufferedReader br = new BufferedReader(new FileReader(path));
             String line;
 
             while ((line = br.readLine()) != null) {
@@ -34,10 +31,11 @@ public class CsvReader {
             return conditions;
         } catch (FileNotFoundException e) {
             System.err.println("No file was found on the specified path");
+            System.exit(1);
 
         } catch (IOException e) {
-            System.err.println("Check logs to debug");
-            e.printStackTrace();
+            System.err.println("Something went wrong while reading the file");
+            System.exit(1);
         }
 
         return null;
@@ -46,12 +44,12 @@ public class CsvReader {
     /**
      * method to print an arrayList of String arrays
      *
-     * @param list ArryList of String arrays
+     * @param list ArrayList of String arrays
      *             used for testing purposes
      */
     public static void printList(ArrayList<String[]> list) {
-        for (String[] empl : list) {
-            for (String ag : empl) {
+        for (String[] str : list) {
+            for (String ag : str) {
                 System.out.print(ag + " ");
             }
 

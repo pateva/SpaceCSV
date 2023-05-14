@@ -7,17 +7,16 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import javax.sql.DataSource;
 import java.util.Date;
 import java.util.Properties;
 
 public class SendEmailAsAttachment {
-    static String senderMail = System.getenv("SENDER_MAIL");
-    static String senderPassword = System.getenv("SENDER_PASSWORD");
+    //static String senderMail = System.getenv("SENDER_MAIL");
+    //static String senderPassword = System.getenv("SENDER_PASSWORD");
     static String smtpServer = "smtp.abv.bg";
     static int port = 465;
 
-    public static void sendMail(String recipientMail) {
+    public static void sendMail(String senderMail, String senderPassword, String recipientMail) {
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true"); //enable SMTP auth
@@ -43,11 +42,11 @@ public class SendEmailAsAttachment {
         Session session = Session.getDefaultInstance(props, auth);
         System.out.println("Session created");
 
-        sendEmail(session, recipientMail, subject, body);
+        generateAndSendEmail(session, senderMail, recipientMail, subject, body);
 
     }
 
-    public static void sendEmail(Session session, String toEmail, String subject, String body) {
+    public static void generateAndSendEmail(Session session, String senderMail, String toEmail, String subject, String body) {
         try {
             MimeMessage msg = new MimeMessage(session);
             //set message headers
