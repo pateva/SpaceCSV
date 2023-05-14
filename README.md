@@ -14,5 +14,9 @@ Conditions to calculate the most appropriate date:
 
 Output file:
 
+![image](https://github.com/pateva/SpaceCSV/assets/83903221/c8e49b7e-ecb6-4f18-b44e-6087acc732f9)
+
+*It is intentional that there are no values for Lightning and Clouds
+
 
 
