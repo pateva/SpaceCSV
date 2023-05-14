@@ -11,8 +11,8 @@ import java.util.Date;
 import java.util.Properties;
 
 public class SendEmailAsAttachment {
-    //static String senderMail = System.getenv("SENDER_MAIL");
-    //static String senderPassword = System.getenv("SENDER_PASSWORD");
+//    static String senderMail = System.getenv("SENDER_MAIL");
+//    static String senderPassword = System.getenv("SENDER_PASSWORD");
     static String smtpServer = "smtp.abv.bg";
     static int port = 465;
 
@@ -40,6 +40,7 @@ public class SendEmailAsAttachment {
                 Attached you can find the weather report with the most appropriate launch date""".indent(1);
 
         Session session = Session.getDefaultInstance(props, auth);
+        session.setDebug(true);
         System.out.println("Session created");
 
         generateAndSendEmail(session, senderMail, recipientMail, subject, body);
@@ -54,7 +55,7 @@ public class SendEmailAsAttachment {
             msg.addHeader("format", "flowed");
             msg.addHeader("Content-Transfer-Encoding", "8bit");
 
-            msg.setFrom(new InternetAddress(senderMail, "Petya Ateva"));
+            msg.setFrom(new InternetAddress(senderMail, "NoReply-JD"));
             msg.setReplyTo(InternetAddress.parse(senderMail, false));
             msg.setSubject(subject, "UTF-8");
             msg.setSentDate(new Date());
@@ -79,9 +80,13 @@ public class SendEmailAsAttachment {
             System.out.println("Message is ready");
             Transport.send(msg);
 
+            //I experienced some issues with getting the mail to be sent shortly before submitting
+            //without any changes on my end
+
             System.out.println("Mail Sent Successfully!!");
         } catch (Exception e) {
             System.err.println("There was an issue with sending the mail!");
+            //e.printStackTrace();
         }
     }
 }

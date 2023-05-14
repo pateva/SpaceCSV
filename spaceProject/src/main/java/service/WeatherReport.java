@@ -31,8 +31,7 @@ public class WeatherReport {
         for (String[] str : listDays) {
             if (str[0].equals("Day/Parameter")) {
                 //do nothing
-            }
-            else if (!str[0].equals("Lightning") && !str[0].equals("Clouds")) {
+            } else if (!str[0].equals("Lightning") && !str[0].equals("Clouds")) {
                 report.add(aggrNumParam(str));
             } else {
                 report.add(aggrText(str));
