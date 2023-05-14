@@ -1,8 +1,13 @@
 package service;
 
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.sql.DataSource;
 import java.util.Date;
 import java.util.Properties;
 
@@ -29,8 +34,11 @@ public class SendEmailAsAttachment {
             }
         };
 
-        String subject = "Why do meteorologists hate the wind? Because it takes them forever to get their forecasts off the ground!";
-        String body = "Attached you can find the weather report with the most appropriate launch date";
+        String subject = "Why do meteorologists hate the wind?";
+        String body = """
+                Because it takes them forever to get their forecasts off the ground!
+
+                Attached you can find the weather report with the most appropriate launch date""".indent(1);
 
         Session session = Session.getDefaultInstance(props, auth);
         System.out.println("Session created");
@@ -47,23 +55,34 @@ public class SendEmailAsAttachment {
             msg.addHeader("format", "flowed");
             msg.addHeader("Content-Transfer-Encoding", "8bit");
 
-            msg.setFrom(new InternetAddress("test_space@abv.bg", "NoReply-JD"));
-
-            msg.setReplyTo(InternetAddress.parse("no_reply@abv.bg", false));
-
+            msg.setFrom(new InternetAddress(senderMail, "Petya Ateva"));
+            msg.setReplyTo(InternetAddress.parse(senderMail, false));
             msg.setSubject(subject, "UTF-8");
-
-            msg.setText(body, "UTF-8");
-
             msg.setSentDate(new Date());
-
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
+
+            //message body part
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setText(body);
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart);
+
+            //attachment part
+            messageBodyPart = new MimeBodyPart();
+            String fileName = "report.csv";
+            FileDataSource source = new FileDataSource(fileName);
+            messageBodyPart.setDataHandler(new DataHandler(source));
+            messageBodyPart.setFileName(fileName);
+            multipart.addBodyPart(messageBodyPart);
+
+            msg.setContent(multipart);
+
             System.out.println("Message is ready");
             Transport.send(msg);
 
-            System.out.println("EMail Sent Successfully!!");
+            System.out.println("Mail Sent Successfully!!");
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("There was an issue with sending the mail!");
         }
     }
 }

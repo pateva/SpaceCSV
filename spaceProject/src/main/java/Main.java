@@ -21,21 +21,21 @@ public class Main {
     public static void main(String[] args) {
 
 
-//        ArrayList<String[]> listOne = CsvReader.ReadCSV("../spaceFile.csv");
-//        try {
-//            ArrayList<DayWeatherConditions> mapper = DayWeatherConditionsMapper.mapper(listOne, 15);
-//            //System.out.println(WeatherReport.findBestDay(mapper));
-//            WeatherReport report = new WeatherReport(listOne);
-//
-//            ArrayList<String[]> toFile = report.calculateReport();
-//            CsvWriter.write(toFile, "report");
-//
-//        } catch (InvalidFileException e) {
-//            e.printStackTrace();
-//        }
+        ArrayList<String[]> listOne = CsvReader.ReadCSV("../spaceFile.csv");
+        try {
+            ArrayList<DayWeatherConditions> mapper = DayWeatherConditionsMapper.mapper(listOne, 15);
+            //System.out.println(WeatherReport.findBestDay(mapper));
+            WeatherReport report = new WeatherReport(listOne);
+
+            ArrayList<String[]> toFile = report.calculateReport();
+            CsvWriter.write(toFile, "report.csv");
+
+        } catch (InvalidFileException e) {
+            e.printStackTrace();
+        }
 
 
-        SendEmailAsAttachment.sendMail("ateva.petya@gmail.com");
+       // SendEmailAsAttachment.sendMail("ateva.petya@gmail.com");
     }
 
 }
