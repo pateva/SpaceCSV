@@ -5,8 +5,17 @@ import exceptions.InvalidFileException;
 
 import java.util.ArrayList;
 
+/**
+ * Service class used to convert an ArrayList of String arrays to an ArrayList of DayWeatherConditions objects
+ */
 public class DayWeatherConditionsMapper {
 
+    /**
+     * @param list    ArrayList of String arrays to be converted
+     * @param cntDays Count of provided days in thr ArrayList of String arrays
+     * @return ArrayList of DayWeatherConditions objects
+     * @throws InvalidFileException if data in the file is invalid and has surpassed the original file validation
+     */
     public static ArrayList<DayWeatherConditions> mapper(ArrayList<String[]> list, int cntDays) throws InvalidFileException {
         if (!isValidList(list)) {
             throw new InvalidFileException("Invalid file");
@@ -17,6 +26,7 @@ public class DayWeatherConditionsMapper {
                 DayWeatherConditions day = new DayWeatherConditions();
 
                 for (String[] condition : list) {
+
                     switch (condition[0]) {
                         case "Day/Parameter":
                             day.setDayIndex(Integer.parseInt(condition[index]));
@@ -45,15 +55,23 @@ public class DayWeatherConditionsMapper {
                 }
                 condList.add(day);
             }
+
+            /*
             for (DayWeatherConditions damn : condList) {
                 System.out.println(damn);
             }
-
+            */
 
             return condList;
         }
     }
 
+    /**
+     * this fucntions checks if the data provided in the ArrayList of String arrays is valid
+     *
+     * @param list ArrayList ofr String Arrays
+     * @return true if valid and false if invalid
+     */
     public static boolean isValidList(ArrayList<String[]> list) {
         if (list.size() != 7) return false;
 

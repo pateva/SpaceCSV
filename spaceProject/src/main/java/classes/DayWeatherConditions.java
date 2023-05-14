@@ -1,5 +1,9 @@
 package classes;
 
+/**
+ * Model to save the weather conditions for a given day
+ */
+
 public class DayWeatherConditions {
     private int dayIndex;
     private int temperature;
@@ -10,7 +14,8 @@ public class DayWeatherConditions {
     private String clouds;
     private int checksum;
 
-    public DayWeatherConditions() {}
+    public DayWeatherConditions() {
+    }
 
     public int getDayIndex() {
         return dayIndex;
@@ -72,8 +77,34 @@ public class DayWeatherConditions {
         return checksum;
     }
 
-    public void calculateChecksum() {
-        //todo
+    /**
+     * calculates the Checksum of the weather conditions
+     * used to find the most appropriate day for a rocket launch
+     * the day is first validated whether a rocket can launch at all
+     * if true the checksum is calculated based on wind and humidity
+     * the lower checksum the better
+     * returns -1 if day is not valid for launching
+     */
+    public int calculateChecksum() {
+        if (this.isValidLaunchDay()) {
+            return this.wind + this.humidity;
+        } else {
+            return -1;
+        }
+    }
+
+    public boolean isValidLaunchDay() {
+        if (temperature < 2 || temperature > 31) return false;
+
+        if (wind > 10 || wind < 0) return false;
+
+        if (humidity > 60 || humidity < 0) return false;
+
+        if (precipitation != 0) return false;
+
+        if (!lightning.toLowerCase().equals("no")) return false;
+
+        return (!clouds.toLowerCase().equals("cumulus") && !clouds.toLowerCase().equals("nimbus"));
     }
 
     @Override
