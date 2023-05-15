@@ -18,5 +18,7 @@ Output file:
 
 *It is intentional that there are no values for Lightning and Clouds
 
+The application is set up to work with the abv.bg SMTP server.
+
 
 
