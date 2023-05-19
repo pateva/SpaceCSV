@@ -80,9 +80,6 @@ public class SendEmailAsAttachment {
             System.out.println("Message is ready");
             Transport.send(msg);
 
-            //I experienced some issues with getting the mail to be sent shortly before submitting
-            //without any changes on my end
-
             System.out.println("Mail Sent Successfully!!");
         } catch (Exception e) {
             System.err.println("There was an issue with sending the mail!");

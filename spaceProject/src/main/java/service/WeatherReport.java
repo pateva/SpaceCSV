@@ -53,6 +53,7 @@ public class WeatherReport {
 
             if (currentChecksum != -1 && currentChecksum < lowestChecksum) {
                 bestDay = day.getDayIndex();
+                lowestChecksum = currentChecksum;
             }
         }
 
